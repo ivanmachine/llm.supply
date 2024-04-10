@@ -1,0 +1,33 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Krona+One&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap");
+@import url("./queries.css");
+
+main {
+  min-height: 100vh;
+  margin-top: 5rem;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+a,
+p,
+li,
+span {
+  font-family: "Montserrat", sans-serif;
+  font-weight: normal;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: "Krona One", sans-serif;
+}
