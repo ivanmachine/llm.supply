@@ -1,0 +1,51 @@
+name: ⚡ Build, deploy, and serve live SSR svelte.kit site
+on:
+  push:
+    branches:
+      - deploy
+  workflow_dispatch:
+jobs:
+  build-and-deploy-SSR:
+    name: 🎉 Deploy
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: 🚚 Get latest code
+        uses: actions/checkout@v3.0.2
+      - uses: actions/setup-node@v3.1.1
+        with:
+          node-version: v20.0.0
+      - run: |
+          npm ci --omit dev
+          npm run build
+          mkdir -p llm.supply
+          mv build              llm.supply
+          mv package.json       llm.supply
+      - name: 📂 Sync files
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
+        with:
+          username: root
+          server: ${{ secrets.SERVER_IP }}
+          password: ${{ secrets.SERVER_PASSWORD }}
+          local_path: "./llm-supply"
+          remote_path: "/var/www/"
+          sftpArgs: "-o ConnectTimeout=5"
+      - name: 🚀 SSH to Digital Ocean, build, and start
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: root
+          password: ${{ secrets.SERVER_PASSWORD }}
+          script: |
+            nvm use 20.0.0
+            cd /var/www/llm.supply
+            bun i
+            pm2 ls 
+            pm2 describe llm.supply > /dev/null 2>&1
+            if [ $? -eq 0 ]; then
+                pm2 reload llm.supply
+            else
+                pm2 start "yarn start" --name "llm.supply"
+            fi
+            pm2 save
+            pm2 startup
