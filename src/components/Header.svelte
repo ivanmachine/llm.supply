@@ -1,6 +1,7 @@
-<script>
-  import Button from "./Button.svelte";
+<script lang="ts">
+  import ProfileButton from "./ProfileButton.svelte";
   import Logo from "./Logo.svelte";
+  export let auth_session: string | undefined;
 </script>
 
 <header>
@@ -12,7 +13,7 @@
       <a href="/about">about</a>
       <a href="/contact">contact</a>
     </nav>
-    <Button text="Log in" url="/profile" />
+    <ProfileButton {auth_session} />
   </div>
 </header>
 
