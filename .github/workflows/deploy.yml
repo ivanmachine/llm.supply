@@ -27,7 +27,7 @@ jobs:
           username: root
           server: ${{ secrets.SERVER_IP }}
           password: ${{ secrets.SERVER_PASSWORD }}
-          local_path: "./llm-supply"
+          local_path: "./llm.supply"
           remote_path: "/var/www/"
           sftpArgs: "-o ConnectTimeout=5"
       - name: 🚀 SSH to Digital Ocean, build, and start
