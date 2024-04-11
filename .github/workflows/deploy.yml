@@ -16,8 +16,8 @@ jobs:
         with:
           node-version: v20.0.0
       - run: |
-          npm ci --omit dev
-          npm run build
+          yarn
+          yarn build
           mkdir -p llm.supply
           mv build              llm.supply
           mv package.json       llm.supply
